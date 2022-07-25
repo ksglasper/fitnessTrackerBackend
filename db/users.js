@@ -36,11 +36,32 @@ return user
 }
 
 async function getUserById(userId) {
-
+try { 
+  const {rows}= await client.query(`
+  SELECT id, username, password
+  FROM users
+  WHERE id=$1;
+  `, [userId])
+  // console.log(rows.id, "this is users")
+  return rows
+} catch (error) {
+  console.error
+  throw error
+}
 }
 
 async function getUserByUsername(userName) {
-
+try {
+  const {rows: [user]} = await client.query(`
+SELECT *
+FROM users
+WHERE username=$1;
+`, [userName,])
+return user
+} catch (error) {
+  console.error
+  throw error;
+}
 }
 
 module.exports = {
