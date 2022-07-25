@@ -1,6 +1,7 @@
 // require in the database adapter functions as you write them (createUser, createActivity...)
+// const { } = require('./');
 const client = require("./client");
-const {createUser, createActivity, createRoutine, getAllActivities, getRoutinesWithoutActivities, addActivityToRoutine} = require("./");
+const {createUser, getUserById, createActivity, createRoutine, getAllActivities, getRoutinesWithoutActivities, addActivityToRoutine} = require("./");
 
 
 
@@ -45,6 +46,7 @@ async function createInitialUsers() {
 
     console.log("Users created:")
     console.log(users)
+    await getUserById(1)
     console.log("Finished creating users!")
   } catch (error) {
     console.error("Error creating users!")
