@@ -62,6 +62,7 @@ async function getActivityByName(name) {
 
 async function attachActivitiesToRoutines(routines) {
   // no side effects
+  console.log(routines, "eds routines")
   const routinesToReturn = [...routines];
   const binds = routines.map((_, index) => `$${index + 1}`).join(', ');
   const routineIds = routines.map(routine => routine.id);
