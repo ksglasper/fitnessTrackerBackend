@@ -11,7 +11,7 @@ async function createUser({ username, password }) {
     ON CONFLICT (username) DO NOTHING
     RETURNING (username);
     `,[username, password])
-//  console.log(user, 'this is what is being created user')
+ console.log(user, 'user being created by createUser()')
     return user
   } catch (error) {
     console.error
