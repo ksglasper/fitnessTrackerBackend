@@ -38,10 +38,9 @@ async function getAllRoutines() {
 try {
 const {rows} = await client.query(`
 SELECT routines.*
-FROM routines
-JOIN users ON  routines."creatorId"=users.id;
+FROM routines;
 `)
-console.log(rows)
+console.log(rows, 'created join row')
 return rows
 }catch (error) {
   console.error
