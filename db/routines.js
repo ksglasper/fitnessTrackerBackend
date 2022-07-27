@@ -8,7 +8,7 @@ try {
   ON CONFLICT (name) DO NOTHING
   RETURNING *;
   `,[creatorId, isPublic, name, goal])
-console.log(routines, 'routine we created from createRoutine()')
+// console.log(routines, 'routine we created from createRoutine()')
   return routines
 } catch (error) {
   console.error
@@ -21,9 +21,40 @@ console.log(routines, 'routine we created from createRoutine()')
 
 async function getRoutineById(id) {}
 
+
+
+
+
+
+
 async function getRoutinesWithoutActivities() {}
 
-async function getAllRoutines() {}
+
+
+
+
+
+async function getAllRoutines() {
+try {
+const {rows} = await client.query(`
+SELECT routines.*
+FROM routines
+JOIN users ON  routines."creatorId"=users.id;
+`)
+console.log(rows)
+return rows
+}catch (error) {
+  console.error
+  throw error
+}
+
+
+}
+
+
+
+
+
 
 async function getAllPublicRoutines() {}
 
