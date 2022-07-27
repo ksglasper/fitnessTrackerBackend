@@ -62,12 +62,13 @@ async function getActivityByName(name) {
 
 async function attachActivitiesToRoutines(routines) {
   // no side effects
-  console.log(routines, "eds routines")
+  // console.log(routines, "eds routines")
   const routinesToReturn = [...routines];
+  // console.log('before try in ed function', routinesToReturn)
+  // console.log(routinesToReturn, 'the copied array?')
   const binds = routines.map((_, index) => `$${index + 1}`).join(', ');
   const routineIds = routines.map(routine => routine.id);
   if (!routineIds?.length) return [];
-  
   try {
     // get the activities, JOIN with routine_activities (so we can get a routineId), and only those that have those routine ids on the routine_activities join
     const { rows: activities } = await client.query(`
@@ -76,6 +77,11 @@ async function attachActivitiesToRoutines(routines) {
       JOIN routine_activities ON routine_activities."activityId" = activities.id
       WHERE routine_activities."routineId" IN (${ binds });
     `, routineIds);
+
+    console.log(routineIds, 'the ids in the ed function')
+    console.log(binds, 'binds in the ed function')
+
+    // console.log(activities, 'in the ed function')
 
     // loop over the routines
     for(const routine of routinesToReturn) {
