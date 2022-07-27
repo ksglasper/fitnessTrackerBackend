@@ -74,7 +74,7 @@ console.log(routines, 'what we pass into function')
 // const routinesToReturn = await attachActivitiesToRoutines(routines)
 // console.log(routinesToReturn, 'result from attach function')
 
-// return attachActivitiesToRoutines(routines)
+return attachActivitiesToRoutines(routines)
 }catch (error) {
   console.error
   throw error
