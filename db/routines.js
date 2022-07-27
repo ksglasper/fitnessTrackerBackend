@@ -3,12 +3,13 @@ const {attachActivitiesToRoutines} = require('./activities');
 
 async function createRoutine({ creatorId, isPublic, name, goal }) {
 try {
+ console.log(creatorId, ";;;;;;;;;;" )
   const {rows: [routines]} = await client.query(`
   INSERT INTO routines("creatorId", "isPublic", name, goal)
   VALUES ($1,$2,$3,$4)
   RETURNING *;
   `,[creatorId, isPublic, name, goal])
-// console.log(routines, 'routine we created from createRoutine()')
+console.log(routines, 'routine we created from createRoutine()')
   return routines
 } catch (error) {
   console.error
@@ -64,13 +65,13 @@ try {
 async function getAllRoutines() {
 try {
 const {rows: routines} = await client.query(`
-SELECT routines.*, users.username AS "creatorName" 
+SELECT routines.*, users.username AS "creatorName"
 FROM routines
 JOIN users ON routines."creatorId"=users.id;
 `)
 // console.log(rows,'before ed function')
 // console.log(rows, 'the rows')
-console.log(routines, 'what we pass into function')
+// console.log(routines, 'what we pass into function')
 // const routinesToReturn = await attachActivitiesToRoutines(routines)
 // console.log(routinesToReturn, 'result from attach function')
 
@@ -81,7 +82,9 @@ return attachActivitiesToRoutines(routines)
 }
 }
 
-
+// SELECT routines.*, users.username AS "creatorName" 
+// FROM routines
+// JOIN users ON routines."creatorId"=users.id;
 
 
 
