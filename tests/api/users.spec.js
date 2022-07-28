@@ -49,7 +49,7 @@ describe("/api/users", () => {
         .send(fakeUserData);
 
       expectNotToBeError(response.body);
-
+console.log(response.body, 'response.body::::::::')
       expect(response.body).toMatchObject({
         message: expect.any(String),
         token: expect.any(String),
