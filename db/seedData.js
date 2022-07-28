@@ -1,7 +1,7 @@
 // require in the database adapter functions as you write them (createUser, createActivity...)
 // const { } = require('./');
 const client = require("./client");
-const {createUser, getUserById, createActivity, createRoutine, getAllActivities, getRoutinesWithoutActivities, addActivityToRoutine} = require("./");
+const {createUser, getUserById, createActivity, createRoutine, getAllActivities, getRoutinesWithoutActivities, addActivityToRoutine,getAllRoutines, getRoutineById, getActivityById} = require("./");
 
 
 
@@ -50,7 +50,7 @@ async function createTables() {
     duration INTEGER,
     COUNT INTEGER,
     UNIQUE ("routineId", "activityId")
-  )
+  );
   `)
 
   
@@ -155,8 +155,10 @@ async function createInitialRoutines() {
 
 async function createInitialRoutineActivities() {
   console.log("starting to create routine_activities...")
+  
   const [bicepRoutine, chestRoutine, legRoutine, cardioRoutine] =
     await getRoutinesWithoutActivities()
+    console.log('made it here')
   const [bicep1, bicep2, chest1, chest2, leg1, leg2, leg3] =
     await getAllActivities()
 
@@ -220,6 +222,12 @@ async function createInitialRoutineActivities() {
     routineActivitiesToCreate.map(addActivityToRoutine)
   )
   console.log("routine_activities created: ", routineActivities)
+  // const testRoutine = await getAllRoutines()
+  // console.log(testRoutine[1], 'looking at specific routine')
+  // console.log(await getRoutineById(4),'routine ID')
+  // console.log(await getActivityById(6),'ACTIVITY ID')
+
+  
   console.log("Finished creating routine_activities!")
 }
 

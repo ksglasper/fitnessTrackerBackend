@@ -13,7 +13,7 @@ try {
         ON CONFLICT ("routineId", "activityId") DO NOTHING
         RETURNING *;
   `, [routineId, activityId, count, duration])
-  console.log(activities, 'object just created from addActivity')
+ 
   return activities
 } catch (error) {
   console.error

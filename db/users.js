@@ -9,9 +9,9 @@ async function createUser({ username, password }) {
     INSERT INTO users(username, password)
     VALUES ($1, $2)
     ON CONFLICT (username) DO NOTHING
-    RETURNING (username);
+    RETURNING username,id;
     `,[username, password])
- console.log(user, 'user being created by createUser()')
+
     return user
   } catch (error) {
     console.error
@@ -36,14 +36,15 @@ return user
 }
 
 async function getUserById(userId) {
-try { 
-  const {rows}= await client.query(`
-  SELECT id, username, password
-  FROM users
-  WHERE id=$1;
-  `, [userId])
-  // console.log(rows.id, "this is users")
-  return rows
+  try { 
+    const {rows: [user]}= await client.query(`
+    SELECT id, username
+    FROM users
+    WHERE id=$1;
+    `, [userId])
+   
+  
+  return user
 } catch (error) {
   console.error
   throw error
