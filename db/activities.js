@@ -78,8 +78,8 @@ async function attachActivitiesToRoutines(routines) {
       WHERE routine_activities."routineId" IN (${ binds });
     `, routineIds);
 
-    console.log(routineIds, 'the ids in the ed function')
-    console.log(binds, 'binds in the ed function')
+    // console.log(routineIds, 'the ids in the ed function')
+    // console.log(binds, 'binds in the ed function')
 
     // console.log(activities, 'in the ed function')
 
