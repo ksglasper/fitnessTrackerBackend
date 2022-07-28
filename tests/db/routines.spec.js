@@ -32,6 +32,7 @@ const { objectContaining } = expect;
 
 function expectRoutinesToContainRoutine(routines, fakeRoutine) {
   expect(routines).toEqual(expect.any(Array));
+  console.log(routines, fakeRoutine, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
   const routine = routines.find((routine) => routine.id === fakeRoutine.id);
   expect(routine.id).toEqual(fakeRoutine.id);
   expect(routine.name).toEqual(fakeRoutine.name);
@@ -140,6 +141,7 @@ describe("DB Routines", () => {
   describe("getAllRoutines", () => {
     it("should include the public routine", async () => {
       const routines = await getAllRoutines();
+      console.log(routines, '!!!!!!!!!!!!!!!!!!!??????????')
       expectRoutinesToContainRoutine(routines, fakeRoutine);
     });
 
