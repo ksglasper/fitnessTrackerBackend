@@ -9,14 +9,21 @@ router.use((req, res, next)=>{
     next()
 })
 // POST /api/users/register
-router.post('/register', async (res, req, next)=>{
-    const {username, password} = res.body
+router.post('/register', async (req, res, next)=>{
+    const {username, password} = req.body
 
     if(password.length < 8){
         next({
             name: 'PasswordShortError',
             message: 'A password must be at least 8 characters long'
 
+        })
+    }
+
+    if(getUserByUsername(username)){
+        next({
+            name: 'UserExistError',
+            message: 'A user already'
         })
     }
 
