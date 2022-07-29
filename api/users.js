@@ -16,8 +16,7 @@ router.post("/register", async (req, res, next) => {
       next({
         name: "PasswordShortError",
         message: `Password Too Short!`,
-        error: 'Error!'
-        
+        error: "Error!",
       });
     }
 
@@ -25,16 +24,20 @@ router.post("/register", async (req, res, next) => {
       next({
         name: "UserExistError",
         message: `User ${username} is already taken.`,
-        error: 'Error!'
+        error: "Error!",
       });
     }
 
     const response = await createUser({ username, password });
 
-    const token = jwt.sign({
-      id: response.id,
-      username
-    },process.env.JWT_SECRET, {expiresIn: "1m"});
+    const token = jwt.sign(
+      {
+        id: response.id,
+        username,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "1m" }
+    );
     // console.log(token, "!!!!!!!!!!!!!");
 
     res.send({
@@ -49,19 +52,36 @@ router.post("/register", async (req, res, next) => {
 
 // POST /api/users/login
 
-router.post('/login', async (req, res, next)=>{
-    const {password, username} = req.body
-    try {
-        const user = await getUser({username, password})
-      if(!user){
-        next({
-            
-        })
-      }  
-    } catch (error) {
-        next(error)
+router.post("/login", async (req, res, next) => {
+  const { password, username } = req.body;
+  try {
+    const user = await getUser({ username, password });
+    if (!user) {
+      next({
+        name: "Login Error",
+        message: "Invalid credentials",
+        error: "Error!",
+      });
     }
-})
+
+    const token = jwt.sign(
+      {
+        id: user.id,
+        username,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "1m" }
+    );
+
+    res.send({
+      message: "you're logged in!",
+      token,
+      user,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 
 // GET /api/users/me
 
