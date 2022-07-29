@@ -238,8 +238,6 @@ describe("/api/users", () => {
 
       // Get the routines from the DB
       const routinesFromDB = await getPublicRoutinesByUser(sean.fakeUser);
-          console.log(response.body, "This is the first problem!!!!")  
-          console.log([...routinesFromDB],'This is what we are trying to get:::::::')
       expect(response.body).toEqual([...routinesFromDB]);
     });
 

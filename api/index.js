@@ -35,7 +35,6 @@ router.use(async (req, res, next) => {
 router.get("/health", async (req, res, next) => {
   const message = "All is well, enjoy the 200!";
   res.send({ message });
-  next();
 });
 
 // ROUTER: /api/users
@@ -55,6 +54,15 @@ const routineActivitiesRouter = require("./routineActivities");
 const { getUserByUsername, getUserById } = require("../db");
 const { response } = require("../app");
 router.use("/routine_activities", routineActivitiesRouter);
+
+router.use((req, res, next) => {
+  next({
+    error : 'Error!',
+    name: "PageNotFound",
+    message: "The page you are looking for is not here",
+    status : 404
+  })
+});
 
 router.use((error, req, res, next) => {
   let errorStatus = 200;
