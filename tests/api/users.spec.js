@@ -222,7 +222,7 @@ describe("/api/users", () => {
   });
 
   describe("GET /api/users/:username/routines", () => {
-    xit("Gets a list of public routines for a particular user.", async () => {
+    it("Gets a list of public routines for a particular user.", async () => {
       // Create a fake user with a bunch of routines associated
       const { fakeUser, token } = await createFakeUserWithRoutinesAndActivities(
         "Greg"
@@ -238,11 +238,12 @@ describe("/api/users", () => {
 
       // Get the routines from the DB
       const routinesFromDB = await getPublicRoutinesByUser(sean.fakeUser);
-
+          console.log(response.body, "This is the first problem!!!!")  
+          console.log([...routinesFromDB],'This is what we are trying to get:::::::')
       expect(response.body).toEqual([...routinesFromDB]);
     });
 
-    xit("gets a list of all routines for the logged in user", async () => {
+    it("gets a list of all routines for the logged in user", async () => {
       const { fakeUser, token } = await createFakeUserWithRoutinesAndActivities(
         "Angela"
       );

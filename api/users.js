@@ -3,7 +3,9 @@ const express = require("express");
 const router = express.Router();
 const { createUser, getUserByUsername, getUser } = require("../db/users");
 const jwt = require("jsonwebtoken");
-const {requireUser} = require("./utils");
+const { requireUser } = require("./utils");
+const {getPublicRoutinesByUser, getAllRoutinesByUser} = require('../db/routines');
+
 
 router.use((req, res, next) => {
   console.log("A request is being made to /users");
@@ -86,22 +88,37 @@ router.post("/login", async (req, res, next) => {
 
 //GET /api/users/me
 
-router.get("/me", requireUser, async (req, res, next)=>{
+router.get("/me", requireUser, async (req, res, next) => {
+  try {
+    res.send(req.user);
+  } catch (error) {
+    next(error);
+  }
+});
 
-try {
-  
+// GET /api/users/:username/routines
 
-  res.send(req.user)
-} catch (error) {
-  next(error);
-
-} 
-
-
-
+router.get("/:username/routines", async (req, res, next)=>{
+  try {
+    const  Username = req.params
+    
+    if(req.user && Username.username === req.user.username){
+      const response =   await getAllRoutinesByUser(Username)
+      res.send(response)
+    }else{
+      const response =   await getPublicRoutinesByUser(Username) 
+    res.send(
+   response
+    )}
+    
+  } catch (error) {
+    next(error)
+  }
 })
 
 
-// GET /api/users/:username/routines
+
+
+
 
 module.exports = router;
