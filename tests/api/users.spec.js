@@ -49,7 +49,6 @@ describe("/api/users", () => {
         .send(fakeUserData);
 
       expectNotToBeError(response.body);
-console.log(response.body, 'response.body::::::::')
       expect(response.body).toMatchObject({
         message: expect.any(String),
         token: expect.any(String),
@@ -97,7 +96,7 @@ console.log(response.body, 'response.body::::::::')
       );
     });
 
-    xit("Throws errors for duplicate username", async () => {
+    it("Throws errors for duplicate username", async () => {
       // Create a fake user in the DB
       const { fakeUser: firstUser } = await createFakeUserWithToken();
       // Now try to create a user with the same username
@@ -118,7 +117,7 @@ console.log(response.body, 'response.body::::::::')
       );
     });
 
-    xit("returns error if password is less than 8 characters.", async () => {
+    it("returns error if password is less than 8 characters.", async () => {
       // Create some user data with a password with 7 characters
       const newUserShortPassword = {
         username: faker.internet.userName(),
