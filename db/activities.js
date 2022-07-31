@@ -20,11 +20,11 @@ async function createActivity({ name, description }) {
 
 async function getAllActivities() {
   try {
-    const {rows} = await client.query(`
+    const {rows: activities} = await client.query(`
     SELECT *
     FROM activities;
     `)
-    return rows
+    return activities
   } catch (error) {
     console.error
     throw error
@@ -78,8 +78,8 @@ async function attachActivitiesToRoutines(routines) {
       WHERE routine_activities."routineId" IN (${ binds });
     `, routineIds);
 
-    console.log(routineIds, 'the ids in the ed function')
-    console.log(binds, 'binds in the ed function')
+    // console.log(routineIds, 'the ids in the ed function')
+    // console.log(binds, 'binds in the ed function')
 
     // console.log(activities, 'in the ed function')
 
