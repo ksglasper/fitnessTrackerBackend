@@ -109,7 +109,13 @@ router.post("/:routineId/activities", async (req, res, next) => {
       count,
       duration,
     });
-response ? res.send(response) : next({error : "Error!", message : `Activity ID ${activityId} already exists in Routine ID ${routineId}`, name : "CanNotDuplicateActivity/RoutineId"})
+    response
+      ? res.send(response)
+      : next({
+          error: "Error!",
+          message: `Activity ID ${activityId} already exists in Routine ID ${routineId}`,
+          name: "CanNotDuplicateActivity/RoutineId",
+        });
   } catch (error) {
     next(error);
   }

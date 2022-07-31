@@ -222,12 +222,6 @@ async function createInitialRoutineActivities() {
     routineActivitiesToCreate.map(addActivityToRoutine)
   )
   console.log("routine_activities created: ", routineActivities)
-  // const testRoutine = await getAllRoutines()
-  // console.log(testRoutine[1], 'looking at specific routine')
-  // console.log(await getRoutineById(4),'routine ID')
-  // console.log(await getActivityById(6),'ACTIVITY ID')
-
-  
   console.log("Finished creating routine_activities!")
 }
 
