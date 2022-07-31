@@ -98,7 +98,6 @@ try {
 }
 
 async function canEditRoutineActivity(routineActivityId, userId) {
-
 try {
   const {rows: [routineActivity]} = await client.query(`
   SELECT routine_activities.*, routines."creatorId"

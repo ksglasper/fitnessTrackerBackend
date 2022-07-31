@@ -1,5 +1,4 @@
 const express = require("express");
-const { tr } = require("faker/lib/locales");
 const { addActivityToRoutine } = require("../db/routine_activities");
 const router = express.Router();
 const {
@@ -10,7 +9,6 @@ const {
   destroyRoutine,
 } = require("../db/routines");
 const { requireUser } = require("./utils");
-const { response } = require("../app");
 
 // GET /api/routines
 router.get("/", async (req, res, next) => {

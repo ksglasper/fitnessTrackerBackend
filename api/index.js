@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
+const { getUserById } = require("../db");
+
 
 router.use(async (req, res, next) => {
   const prefix = "Bearer ";
@@ -32,7 +34,7 @@ router.use(async (req, res, next) => {
 });
 
 // GET /api/health
-router.get("/health", async (req, res, next) => {
+router.get("/health", async (req, res) => {
   const message = "All is well, enjoy the 200!";
   res.send({ message });
 });
@@ -51,8 +53,6 @@ router.use("/routines", routinesRouter);
 
 // ROUTER: /api/routine_activities
 const routineActivitiesRouter = require("./routineActivities");
-const { getUserByUsername, getUserById } = require("../db");
-const { response } = require("../app");
 router.use("/routine_activities", routineActivitiesRouter);
 
 router.use((req, res, next) => {
