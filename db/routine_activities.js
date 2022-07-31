@@ -47,12 +47,15 @@ async function getRoutineActivityById(id) {
 
 async function getRoutineActivitiesByRoutine({ id }) {
   try {
-    const {rows: routineActivities} = await client.query(`
+    const { rows: routineActivities } = await client.query(
+      `
     SELECT *
     FROM routine_activities
     WHERE "routineId"=$1;
-    `,[id])
-    return routineActivities
+    `,
+      [id]
+    );
+    return routineActivities;
   } catch (error) {
     console.error;
     throw error;
@@ -60,59 +63,69 @@ async function getRoutineActivitiesByRoutine({ id }) {
 }
 
 async function updateRoutineActivity({ id, ...fields }) {
-const setString = Object.keys(fields).map((key, idx)=>`${key}=$${idx + 1}`).join(',')
-if(!setString){
-  return
-}
-try {
-  // console.log(setString, '!!!!!!!!!!!!!!!!')
-  const {rows: [routineActivity]} = await client.query(`
+  const setString = Object.keys(fields)
+    .map((key, idx) => `${key}=$${idx + 1}`)
+    .join(",");
+  if (!setString) {
+    return;
+  }
+  try {
+    const {
+      rows: [routineActivity],
+    } = await client.query(
+      `
   UPDATE routine_activities
   SET ${setString}
   WHERE id=${id}
   RETURNING *;
-  `,Object.values(fields))
+  `,
+      Object.values(fields)
+    );
 
-  return routineActivity
-} catch (error) {
-  console.error
-    throw error
-}
-
-
+    return routineActivity;
+  } catch (error) {
+    console.error;
+    throw error;
+  }
 }
 
 async function destroyRoutineActivity(id) {
-try {
-  const {rows: [deletedRoutineActivity]} = await client.query(`
+  try {
+    const {
+      rows: [deletedRoutineActivity],
+    } = await client.query(
+      `
   DELETE FROM routine_activities
   WHERE id=$1
   RETURNING id;
-  `,[id])
-  return deletedRoutineActivity
-} catch (error) {
-  console.error
-  throw error
-}
-
+  `,
+      [id]
+    );
+    return deletedRoutineActivity;
+  } catch (error) {
+    console.error;
+    throw error;
+  }
 }
 
 async function canEditRoutineActivity(routineActivityId, userId) {
-try {
-  const {rows: [routineActivity]} = await client.query(`
+  try {
+    const {
+      rows: [routineActivity],
+    } = await client.query(
+      `
   SELECT routine_activities.*, routines."creatorId"
   FROM routine_activities
   JOIN routines ON routine_activities."routineId"=routines.id
   WHERE routine_activities.id=$1 AND "creatorId"=$2;
-  `,[routineActivityId, userId])
-  // console.log(routineActivity, 'what is being made!~')
-  return routineActivity
-} catch (error) {
-  console.error
-  throw error
-}
-
-
+  `,
+      [routineActivityId, userId]
+    );
+    return routineActivity;
+  } catch (error) {
+    console.error;
+    throw error;
+  }
 }
 
 module.exports = {

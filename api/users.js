@@ -1,16 +1,13 @@
-/* eslint-disable no-useless-catch */
 const express = require("express");
 const router = express.Router();
 const { createUser, getUserByUsername, getUser } = require("../db/users");
 const jwt = require("jsonwebtoken");
 const { requireUser } = require("./utils");
-const {getPublicRoutinesByUser, getAllRoutinesByUser} = require('../db/routines');
+const {
+  getPublicRoutinesByUser,
+  getAllRoutinesByUser,
+} = require("../db/routines");
 
-
-router.use((req, res, next) => {
-  console.log("A request is being made to /users");
-  next();
-});
 // POST /api/users/register
 router.post("/register", async (req, res, next) => {
   const { username, password } = req.body;
@@ -30,9 +27,7 @@ router.post("/register", async (req, res, next) => {
         error: "Error!",
       });
     }
-
     const response = await createUser({ username, password });
-
     const token = jwt.sign(
       {
         id: response.id,
@@ -41,7 +36,6 @@ router.post("/register", async (req, res, next) => {
       process.env.JWT_SECRET,
       { expiresIn: "1m" }
     );
-    // console.log(token, "!!!!!!!!!!!!!");
 
     res.send({
       message: "Thank you for signing up",
@@ -54,7 +48,6 @@ router.post("/register", async (req, res, next) => {
 });
 
 // POST /api/users/login
-
 router.post("/login", async (req, res, next) => {
   const { password, username } = req.body;
   try {
@@ -87,7 +80,6 @@ router.post("/login", async (req, res, next) => {
 });
 
 //GET /api/users/me
-
 router.get("/me", requireUser, async (req, res, next) => {
   try {
     res.send(req.user);
@@ -97,30 +89,20 @@ router.get("/me", requireUser, async (req, res, next) => {
 });
 
 // GET /api/users/:username/routines
-
-router.get("/:username/routines", async (req, res, next)=>{
+router.get("/:username/routines", async (req, res, next) => {
   try {
-    const  Username = req.params
-    
-    if(req.user && Username.username === req.user.username){
-      const response =   await getAllRoutinesByUser(Username)
-      res.send(response)
-    }else{
-      const response =   await getPublicRoutinesByUser(Username) 
-    res.send(
-   response
-    )}
-    
+    const Username = req.params;
+
+    if (req.user && Username.username === req.user.username) {
+      const response = await getAllRoutinesByUser(Username);
+      res.send(response);
+    } else {
+      const response = await getPublicRoutinesByUser(Username);
+      res.send(response);
+    }
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
-
-
-
-
-
-
-
+});
 
 module.exports = router;

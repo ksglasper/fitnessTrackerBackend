@@ -3,13 +3,11 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const { getUserById } = require("../db");
 
-
 router.use(async (req, res, next) => {
   const prefix = "Bearer ";
   const auth = req.header("Authorization");
 
   if (!auth) {
-    // nothing to see here
     next();
   } else if (auth.startsWith(prefix)) {
     const token = auth.slice(prefix.length);
@@ -57,15 +55,16 @@ router.use("/routine_activities", routineActivitiesRouter);
 
 router.use((req, res, next) => {
   next({
-    error : 'Error!',
+    error: "Error!",
     name: "PageNotFound",
     message: "The page you are looking for is not here",
-    status : 404
-  })
+    status: 404,
+  });
 });
 
+// eslint-disable-next-line no-unused-vars
 router.use((error, req, res, next) => {
-  let errorStatus = 200;
+  let errorStatus = 400;
   if (error.status) {
     errorStatus = error.status;
   }
