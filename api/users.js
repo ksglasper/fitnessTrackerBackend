@@ -34,7 +34,7 @@ router.post("/register", async (req, res, next) => {
         username,
       },
       process.env.JWT_SECRET,
-      { expiresIn: "1m" }
+      { expiresIn: "1w" }
     );
 
     res.send({
@@ -66,7 +66,7 @@ router.post("/login", async (req, res, next) => {
         username,
       },
       process.env.JWT_SECRET,
-      { expiresIn: "1m" }
+      { expiresIn: "1w" }
     );
 
     res.send({
